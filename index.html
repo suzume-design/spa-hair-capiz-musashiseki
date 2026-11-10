@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 提案用サンプルのため検索エンジンには載せない（このプロジェクトの全サイト共通・削除しない） -->
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RZWP9PNCS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1RZWP9PNCS');
+    </script>
+
+    <!-- ▼ 差し替え：店舗ごとに書き換える -->
+    <title>spa&amp;hair Capiz（カピス）| 武蔵関駅 徒歩3分・練馬区関町北の美容室｜サンプルサイト</title>
+    <meta name="description" content="東京都練馬区関町北、西武新宿線「武蔵関駅」から徒歩3分の美容室 spa&amp;hair Capiz（カピス）。頭皮と髪のクレンジングを施術に組み込み、毎日の洗い方から見直していく素髪のサロンです。ヘッドスパ、髪質改善ストレート、メンズカットを承ります。完全予約制。※本サイトは提案用サンプルです。">
+    <meta property="og:title" content="spa&amp;hair Capiz（カピス）| 練馬区関町北の美容室">
+    <meta property="og:description" content="武蔵関駅から徒歩3分。毎日の洗い方から髪と頭皮を整えていく、素髪のサロンです。">
+    <meta property="og:type" content="website">
+    <!-- ▲ 差し替えここまで -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 読み込む書体はこの4つだけ。:root の --font-* と必ず一致させること。
+         書体を足す／変えるときは、この family= と :root の両方を直す。 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Zen+Maru+Gothic:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- ⚠ Tailwind は CDN 依存。オフラインではユーティリティクラスが一切効かず、レイアウトが崩れる。 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // ここでは色を直接書かない。すべて下の <style> の :root を参照する。
+        // rgb(var(--x) / <alpha-value>) 形式にしているのは、
+        // text-terras-text/80 のような不透明度つきクラスを効かせるため（重要・下の注意書き参照）。
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'terras-text':     'rgb(var(--c-text) / <alpha-value>)',
+                        'terras-accent1':  'rgb(var(--c-accent1) / <alpha-value>)',
+                        'terras-accent2':  'rgb(var(--c-accent2) / <alpha-value>)',
+                        'terras-cta':      'rgb(var(--c-cta) / <alpha-value>)',
+                        'terras-bg-light': 'rgb(var(--c-bg-light) / <alpha-value>)',
+                    },
+                    fontFamily: {
+                        'sans':     ['"Noto Sans JP"', 'sans-serif'],
+                        'maru':     ['"Zen Maru Gothic"', 'sans-serif'],
+                        'serif':    ['"Noto Serif JP"', 'serif'],
+                        'en-serif': ['"Playfair Display"', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* =====================================================================
+           配色とフォントの唯一の定義箇所。色を変えるときはここだけを直す。
+           Tailwind の terras-* クラスも、下の素の CSS も、すべてここを見ている。
+
+           ⚠ 色の値は「R G B」のスペース区切り（hex ではない）。
+              Tailwind の /80 などの不透明度指定を効かせるための形式。
+              hex を直接書くと text-terras-text/80 のようなクラスが無効になる。
+              hex → RGB は「#4A4540 → 74 69 64」のように16進2桁ずつ10進へ。
+           ===================================================================== */
+        :root {
+            --c-text:     51 56 59;      /* #33383B アッシュチャコール（本文・見出し）／白地 11.87 */
+            --c-accent1: 68 112 126;     /* #44707E くすみ水色（装飾・ラベル）／白地 5.43 */
+            --c-accent2: 201 207 194;    /* #C9CFC2 くすみカーキ（枠線・番号・補助） */
+            --c-cta:     180 82 26;      /* #B4521A 店内のオレンジ（ボタン・価格）／白文字 5.05 */
+            --c-bg-light: 242 244 243;   /* #F2F4F3 アッシュのごく薄い段（セクション背景） */
+            --c-white:   255 255 255;    /* #FFFFFF */
+
+            /* 読み込み済みの4書体のみ。ここに書いた書体は上の Google Fonts <link> にも必ず入れる。 */
+            --font-sans:     'Noto Sans JP', sans-serif;
+            --font-maru:     'Zen Maru Gothic', sans-serif;
+            --font-serif:    'Noto Serif JP', serif;
+            --font-en-serif: 'Playfair Display', serif;
+        }
+
+        body {
+            color: rgb(var(--c-text));
+            background-color: rgb(var(--c-white));
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ヒーロー右の写真の背後に置く、ぼかした円の飾り */
+        .deco-blob {
+            position: absolute;
+            bottom: -1.5rem;
+            left: -1.5rem;
+            width: 6rem;
+            height: 6rem;
+            background-color: rgb(var(--c-accent2));
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.6;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgb(var(--c-white)); }
+        ::-webkit-scrollbar-thumb {
+            background: rgb(var(--c-accent2));
+            border-radius: 4px;
+        }
+    
+
+/* ★狭い画面での横あふれ対策（2026-10-06）
+   body だけ overflow-x: hidden にすると html 側は visible のままなので、
+   iOS Safari ではページが横スクロールでき、右側に地色の帯（余白）が出る。
+   html にも掛ける必要があるが、hidden はスクロールコンテナを作るため
+   position: sticky のヘッダーが効かなくなる。clip は作らないので安全。 */
+@supports (overflow: clip) {
+  html, body { overflow-x: clip; }
+}
+    </style>
+</head>
+<body class="font-sans antialiased tracking-wide leading-relaxed">
+
+    <!-- ============================================================
+         1. ヘッダー（ロゴ＋ナビ＋モバイルメニュー）／画像 0点
+         ============================================================ -->
+    <header class="fixed w-full top-0 z-50 bg-white/75 backdrop-blur-md border-b border-gray-100/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-5 lg:px-10 h-20 flex items-center justify-between">
+            <a href="#" class="flex flex-col">
+                <span class="font-en-serif text-2xl lg:text-3xl text-terras-text tracking-wider">Capiz</span>
+                <span class="text-[10px] text-terras-accent1 font-maru tracking-widest mt-0.5">spa &amp; hair ／ カピス</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#about" class="text-sm font-maru text-terras-text hover:text-terras-accent1 transition-colors">ABOUT</a>
+                <a href="#style" class="text-sm font-maru text-terras-text hover:text-terras-accent1 transition-colors">STYLE</a>
+                <a href="#staff" class="text-sm font-maru text-terras-text hover:text-terras-accent1 transition-colors">STAFF</a>
+                <a href="#flow" class="text-sm font-maru text-terras-text hover:text-terras-accent1 transition-colors">FLOW</a>
+                <a href="#menu" class="text-sm font-maru text-terras-text hover:text-terras-accent1 transition-colors">MENU</a>
+                <a href="#access" class="text-sm font-maru text-terras-text hover:text-terras-accent1 transition-colors">ACCESS</a>
+                <a href="#cta" class="bg-terras-cta text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all">ご予約はこちら</a>
+            </nav>
+
+            <button class="md:hidden text-terras-text p-2" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-menu" onclick="toggleMobileMenu(this)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+        </div>
+
+        <nav id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 flex-col items-center py-6 gap-6 shadow-lg md:hidden">
+            <a href="#about"  onclick="toggleMobileMenu()" class="text-sm font-maru text-terras-text">ABOUT</a>
+            <a href="#style"  onclick="toggleMobileMenu()" class="text-sm font-maru text-terras-text">STYLE</a>
+            <a href="#staff"  onclick="toggleMobileMenu()" class="text-sm font-maru text-terras-text">STAFF</a>
+            <a href="#flow"   onclick="toggleMobileMenu()" class="text-sm font-maru text-terras-text">FLOW</a>
+            <a href="#menu"   onclick="toggleMobileMenu()" class="text-sm font-maru text-terras-text">MENU</a>
+            <a href="#access" onclick="toggleMobileMenu()" class="text-sm font-maru text-terras-text">ACCESS</a>
+            <a href="#cta"    onclick="toggleMobileMenu()" class="bg-terras-cta text-white px-8 py-3 rounded-full text-sm font-medium mt-2">ご予約はこちら</a>
+        </nav>
+    </header>
+
+    <!-- ============================================================
+         2. ヒーロー（左テキスト＋右に実写・角丸カード）／画像 1点
+         焼き込み画像は使わない。images/hero.jpg に店舗の実写を置く。
+         ============================================================ -->
+    <section class="w-full pt-32 pb-16 md:pt-44 md:pb-24 bg-terras-bg-light">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-10 md:gap-16 items-center">
+            <div class="fade-in">
+                <span class="block text-xs font-maru tracking-[0.25em] text-terras-accent1 mb-4">SPA &amp; HAIR IN 練馬区関町北</span>
+                <h1 class="font-serif text-2xl md:text-4xl text-terras-text leading-relaxed md:leading-relaxed mb-6">
+                    髪は、<br>
+                    洗い方から<br class="md:hidden">
+                    変わります。
+                </h1>
+                <p class="font-sans text-sm md:text-base text-terras-text/80 leading-loose mb-10">
+                    西武新宿線「武蔵関駅」から歩いて3分。頭皮と髪のクレンジングを施術に組み込んだ、素髪のサロンです。<br class="hidden md:block">
+                    洗う、流す、とかす。毎日くり返していることを見直すところから、髪と頭皮を整えていきます。完全予約制、当日のご予約も歓迎です。
+                </p>
+                <a href="#cta" class="inline-flex items-center justify-center gap-3 bg-terras-cta text-white px-10 py-4 rounded-full text-sm md:text-base font-medium hover:bg-opacity-90 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                    ご予約・お問い合わせ
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </a>
+            </div>
+            <div class="relative">
+                <div class="deco-blob"></div>
+                <div class="relative rounded-[2.5rem_2.5rem_0.75rem_2.5rem] overflow-hidden shadow-lg">
+                    <img src="images/hero.jpg" alt="オレンジの壁とカウンターのある Capiz の店内" class="w-full h-full object-cover aspect-[4/3]">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         3. ABOUT（写真2枚＋テキスト）／画像 2点
+         ============================================================ -->
+    <section id="about" class="py-24 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+            <div class="w-full md:w-[40%] flex flex-col items-start justify-center">
+                <div class="inline-block mb-8">
+                    <h2 class="font-en-serif text-3xl md:text-4xl text-terras-text tracking-wider">About Us</h2>
+                    <svg class="mt-3 w-32 h-4 text-terras-accent1/80" viewBox="0 0 100 15" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M0,7 Q20,12 40,7 T80,7 T100,7" stroke-width="1.2" stroke-linecap="round"/>
+                        <path d="M40,5 Q43,2 45,7 Z" fill="currentColor" stroke="none"/>
+                        <path d="M60,9 Q63,14 65,7 Z" fill="currentColor" stroke="none"/>
+                    </svg>
+                </div>
+                <h3 class="font-maru text-xl md:text-2xl text-terras-text mb-6 leading-relaxed">
+                    10年先も、<br class="md:hidden">好きでいられる髪へ。
+                </h3>
+                <p class="font-sans text-terras-text/80 leading-loose text-sm md:text-base">
+                    Capiz は「素髪（すがみ）」を軸にしたサロンです。トリートメントやスタイリング剤を重ねていくのではなく、頭皮と髪そのものの状態を整えていくことを考えます。<br><br>
+                    カット、カラー、パーマ、ストレート。どのメニューにも、頭皮と髪のクレンジング、保水、施術後のアルカリ除去が入ります。髪と頭皮に実際に触れて状態を確かめ、この先どうしていくのがよいかを一緒に決めていきます。ご自宅での洗い方やブラッシングの仕方もあわせてお伝えします。縮毛矯正の回数を減らしていきたい、という方のご相談も承ります。
+                </p>
+            </div>
+            <div class="w-full md:w-[60%] relative pt-10 pb-6 pr-4">
+                <!-- 2枚目（左上・前面） -->
+                <img src="images/about_1.jpg" alt="シャンプー台での頭皮のケア" class="absolute left-0 top-0 w-1/2 shadow-xl z-20 border-4 md:border-8 border-white rounded-sm">
+                <!-- 1枚目（右・背面） -->
+                <img src="images/about_2.jpg" alt="窓際に並ぶセットチェア" class="w-[75%] ml-auto mt-10 md:mt-16 shadow-lg relative z-10 border-4 md:border-8 border-white rounded-sm">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         4. STYLE（LADIES 4枚 ＋ MENS 3枚）／画像 最大7点
+         ============================================================ -->
+    <section id="style" class="py-24 md:py-32 bg-white">
+        <div class="max-w-6xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-20">
+                <div class="inline-block">
+                    <h2 class="font-en-serif text-3xl md:text-4xl text-terras-text tracking-wider">Style</h2>
+                    <svg class="mt-4 mx-auto w-40 h-4 text-terras-accent1/80" viewBox="0 0 120 15" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M5,7 Q30,12 60,7 T115,7" stroke-width="1.2" stroke-linecap="round"/>
+                        <circle cx="60" cy="7" r="1.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                </div>
+                <p class="font-maru text-sm mt-4 text-terras-text/80">ケアを組み込んだ施術の仕上がり</p>
+            </div>
+
+            <!-- LADIES -->
+            <div class="mb-10 text-center flex justify-center items-center gap-6">
+                <svg width="40" height="15" viewBox="0 0 60 20" class="text-terras-accent1/60 rotate-180" aria-hidden="true">
+                    <path d="M0,10 Q20,15 40,10 T60,10" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                    <path d="M20,7 Q25,2 25,10 Z" fill="currentColor"/>
+                    <path d="M40,13 Q45,18 45,10 Z" fill="currentColor"/>
+                </svg>
+                <h3 class="font-en-serif text-2xl md:text-3xl text-terras-text tracking-widest">LADIES</h3>
+                <svg width="40" height="15" viewBox="0 0 60 20" class="text-terras-accent1/60" aria-hidden="true">
+                    <path d="M0,10 Q20,15 40,10 T60,10" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                    <path d="M20,7 Q25,2 25,10 Z" fill="currentColor"/>
+                    <path d="M40,13 Q45,18 45,10 Z" fill="currentColor"/>
+                </svg>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+                <div class="bg-white border border-gray-100 shadow-sm">
+                    <img src="images/style_ladies_1.jpg" alt="ストレートのロング" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <h4 class="font-en-serif text-lg text-terras-text mb-2">Straight</h4>
+                        <p class="font-sans text-xs text-terras-text/80 leading-relaxed">クレンジングと保水を挟みながら進めるストレート。手ざわりの変化が期待できます。</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-gray-100 shadow-sm">
+                    <img src="images/style_ladies_2.jpg" alt="暗めの色に仕上げたロング" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <h4 class="font-en-serif text-lg text-terras-text mb-2">Dark Tone</h4>
+                        <p class="font-sans text-xs text-terras-text/80 leading-relaxed">暗めの色味で仕上げたロング。施術のあとにアルカリ除去を行います。</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-gray-100 shadow-sm">
+                    <img src="images/style_ladies_3.jpg" alt="後ろから見たロング" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <h4 class="font-en-serif text-lg text-terras-text mb-2">Long</h4>
+                        <p class="font-sans text-xs text-terras-text/80 leading-relaxed">長さを保ちながら、毛先までまとまる状態を目指します。</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-gray-100 shadow-sm">
+                    <img src="images/style_ladies_4.jpg" alt="ウェーブのミディアム" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <h4 class="font-en-serif text-lg text-terras-text mb-2">Wave</h4>
+                        <p class="font-sans text-xs text-terras-text/80 leading-relaxed">ゆるやかなウェーブのミディアム。乾かし方もあわせてお伝えします。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ▼▼▼ MENS ここから：実写が足りない店舗では、この区切りの中を丸ごと削除してよい ▼▼▼ -->
+            <div class="mb-10 text-center flex justify-center items-center gap-6">
+                <svg width="40" height="15" viewBox="0 0 60 20" class="text-terras-accent2/60 rotate-180" aria-hidden="true">
+                    <path d="M0,10 Q20,15 40,10 T60,10" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                    <path d="M20,7 Q25,2 25,10 Z" fill="currentColor"/>
+                    <path d="M40,13 Q45,18 45,10 Z" fill="currentColor"/>
+                </svg>
+                <h3 class="font-en-serif text-2xl md:text-3xl text-terras-text tracking-widest">MENS</h3>
+                <svg width="40" height="15" viewBox="0 0 60 20" class="text-terras-accent2/60" aria-hidden="true">
+                    <path d="M0,10 Q20,15 40,10 T60,10" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                    <path d="M20,7 Q25,2 25,10 Z" fill="currentColor"/>
+                    <path d="M40,13 Q45,18 45,10 Z" fill="currentColor"/>
+                </svg>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                <div class="bg-white border border-gray-100 shadow-sm">
+                    <img src="images/style_mens_1.jpg" alt="メンズのショート" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <h4 class="font-en-serif text-lg text-terras-text mb-2">Men's Short</h4>
+                        <p class="font-sans text-xs text-terras-text/80 leading-relaxed">何をしたらよいか分からない、というところからご相談を承ります。</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-gray-100 shadow-sm">
+                    <img src="images/style_mens_2.jpg" alt="メンズショートの正面" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <h4 class="font-en-serif text-lg text-terras-text mb-2">Men's Care</h4>
+                        <p class="font-sans text-xs text-terras-text/80 leading-relaxed">高濃度の炭酸泉で頭皮を流してから仕上げます。</p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- ▲▲▲ MENS ここまで：不要なら削除可 ▲▲▲ -->
+        </div>
+    </section>
+
+    <!-- ============================================================
+         STAFF（planA_base にはないセクション。スタッフ2名の実写があるため追加）
+         ============================================================ -->
+    <section id="staff" class="py-24 md:py-32 bg-terras-bg-light">
+        <div class="max-w-4xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <div class="inline-block">
+                    <h2 class="font-en-serif text-3xl md:text-4xl text-terras-text tracking-wider">Staff</h2>
+                    <svg class="mt-4 mx-auto w-40 h-4 text-terras-accent1/80" viewBox="0 0 120 15" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M5,7 Q30,12 60,7 T115,7" stroke-width="1.2" stroke-linecap="round"/>
+                        <circle cx="60" cy="7" r="1.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                </div>
+                <p class="font-maru text-sm mt-4 text-terras-text/80">スタイリスト2名でお迎えします</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white border border-terras-accent2/60 shadow-sm">
+                    <img src="images/staff_1.jpg" alt="スタイリスト maki" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <p class="font-maru text-xs text-terras-accent1 mb-1">スカルプフィットネスディレクター</p>
+                        <h3 class="font-maru text-lg text-terras-text mb-3">maki<span class="block text-[11px] text-terras-text/80 font-sans mt-1 tracking-widest">マキ ／ 美容歴15年</span></h3>
+                        <p class="font-sans text-xs text-terras-text/80 leading-loose">自分自身が頭皮と髪のことで長く悩んできました。手軽に続けられるケアの仕方をお伝えします。カット、カラー、ボブ・ショートボブが得意です。</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-terras-accent2/60 shadow-sm">
+                    <img src="images/staff_2.jpg" alt="スタイリスト 黒田" class="w-full aspect-square object-cover">
+                    <div class="p-6">
+                        <p class="font-maru text-xs text-terras-accent1 mb-1">スカルプトレーナー</p>
+                        <h3 class="font-maru text-lg text-terras-text mb-3">黒田<span class="block text-[11px] text-terras-text/80 font-sans mt-1 tracking-widest">くろだ ／ 美容歴17年</span></h3>
+                        <p class="font-sans text-xs text-terras-text/80 leading-loose">未来の自分のために、頭皮を整えていきませんか。カット、カラー、ストレート、メンズのご相談を承ります。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         5. FLOW（4ステップ）／画像 4点
+         ▼▼▼ FLOW ここから：実写が足りない店舗では <section> ごと削除してよい。
+              その場合はヘッダーとモバイルメニューの #flow リンクも消すこと ▼▼▼
+         ============================================================ -->
+    <section id="flow" class="py-24 md:py-32 bg-terras-bg-light relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="text-center mb-24">
+                <div class="inline-block">
+                    <h2 class="font-en-serif text-3xl md:text-4xl text-terras-text tracking-wider">Flow</h2>
+                    <svg class="mt-4 mx-auto w-40 h-4 text-terras-accent1/80" viewBox="0 0 120 15" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M5,7 Q30,12 60,7 T115,7" stroke-width="1.2" stroke-linecap="round"/>
+                        <circle cx="60" cy="7" r="1.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                </div>
+                <p class="font-maru text-sm mt-4 text-terras-text/80">ご来店から仕上がりまでの流れ</p>
+            </div>
+
+            <div class="space-y-24 md:space-y-32">
+                <!-- Step 1 -->
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                    <div class="w-full md:w-1/2 relative">
+                        <div class="absolute -top-6 -left-4 md:-left-8 font-en-serif text-6xl md:text-8xl text-terras-accent2 opacity-40 z-0" aria-hidden="true">01</div>
+                        <img src="images/flow_1.jpg" alt="カウンターと棚" class="shadow-sm relative z-10 w-full md:w-4/5 ml-auto object-cover">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h3 class="font-maru text-xl text-terras-text mb-4 flex items-center gap-3">
+                            <span class="text-terras-accent2 font-en-serif text-lg tracking-widest">Step.1</span>
+                            髪と頭皮を見る
+                        </h3>
+                        <p class="font-sans text-sm md:text-base text-terras-text/80 leading-loose">
+髪と頭皮に実際に触れて、いまの状態を一緒に確かめます。お悩みをうかがい、この先どうしていくのがよいかをお話しします。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16">
+                    <div class="w-full md:w-1/2 relative">
+                        <div class="absolute -top-6 -right-4 md:-left-8 md:-right-auto font-en-serif text-6xl md:text-8xl text-terras-accent2 opacity-40 z-0" aria-hidden="true">02</div>
+                        <img src="images/flow_2.jpg" alt="シャンプースペース" class="shadow-sm relative z-10 w-full object-cover">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h3 class="font-maru text-xl text-terras-text mb-4 flex items-center gap-3 md:justify-end">
+                            <span class="text-terras-accent2 font-en-serif text-lg tracking-widest md:hidden">Step.2</span>
+                            クレンジング
+                            <span class="text-terras-accent2 font-en-serif text-lg tracking-widest hidden md:inline">.Step 2</span>
+                        </h3>
+                        <p class="font-sans text-sm md:text-base text-terras-text/80 leading-loose md:text-right">
+頭皮と髪のクレンジングから始めます。薬剤を使う施術の前に汚れを落としておくことで、仕上がりの違いが期待できます。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                    <div class="w-full md:w-1/2 relative">
+                        <div class="absolute -top-6 -left-4 md:-left-8 font-en-serif text-6xl md:text-8xl text-terras-accent2 opacity-40 z-0" aria-hidden="true">03</div>
+                        <img src="images/flow_3.jpg" alt="スパ用のリクライニングチェア" class="shadow-sm relative z-10 w-full md:w-5/6 mx-auto object-cover">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h3 class="font-maru text-xl text-terras-text mb-4 flex items-center gap-3">
+                            <span class="text-terras-accent2 font-en-serif text-lg tracking-widest">Step.3</span>
+                            施術とヘッドスパ
+                        </h3>
+                        <p class="font-sans text-sm md:text-base text-terras-text/80 leading-loose">
+ヘッドスパは20分と30分からお選びいただけます。高濃度の炭酸泉もご用意しています。施術と組み合わせてのご利用もできます。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16">
+                    <div class="w-full md:w-1/2 relative">
+                        <div class="absolute -top-6 -right-4 md:-left-8 md:-right-auto font-en-serif text-6xl md:text-8xl text-terras-accent2 opacity-40 z-0" aria-hidden="true">04</div>
+                        <img src="images/flow_4.jpg" alt="セットチェア" class="shadow-sm relative z-10 w-full md:w-4/5 mr-auto object-cover">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h3 class="font-maru text-xl text-terras-text mb-4 flex items-center gap-3 md:justify-end">
+                            <span class="text-terras-accent2 font-en-serif text-lg tracking-widest md:hidden">Step.4</span>
+                            お仕上げ・確認
+                            <span class="text-terras-accent2 font-en-serif text-lg tracking-widest hidden md:inline">.Step 4</span>
+                        </h3>
+                        <p class="font-sans text-sm md:text-base text-terras-text/80 leading-loose md:text-right">
+保水とアルカリ除去を行ってからお仕上げします。ご自宅での洗い方、ブラッシングの仕方もあわせてお伝えします。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ▲▲▲ FLOW ここまで：不要なら削除可 ▲▲▲ -->
+
+    <!-- ============================================================
+         6. MENU（料金表・テキストのみ）／画像 0点
+         価格は必ず参考元の実値に差し替える。創作しないこと。
+         ============================================================ -->
+    <section id="menu" class="py-24 md:py-32 bg-white">
+        <div class="max-w-4xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16">
+                <div class="inline-block">
+                    <h2 class="font-en-serif text-3xl md:text-4xl text-terras-text tracking-wider">Menu &amp; Price</h2>
+                    <svg class="mt-4 mx-auto w-40 h-4 text-terras-accent1/80" viewBox="0 0 120 15" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M5,7 Q30,12 60,7 T115,7" stroke-width="1.2" stroke-linecap="round"/>
+                        <circle cx="60" cy="7" r="1.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                </div>
+            </div>
+
+            <p class="font-sans text-sm text-terras-text/80 text-center mb-10 leading-loose">
+                どのメニューにも、頭皮と髪のクレンジング・保水・施術後のアルカリ除去が入ります。<br class="hidden md:block">
+                長さに応じたロング料金（¥500〜¥2,000）を申し受けます。
+            </p>
+
+            <div class="bg-white border border-terras-accent2/40 p-8 md:p-14 relative shadow-sm">
+                <!-- 四隅のコーナー装飾 -->
+                <svg class="absolute top-2 left-2 w-6 h-6 text-terras-accent1/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path d="M2,12 Q2,2 12,2" stroke-width="1" stroke-linecap="round"/>
+                    <circle cx="12" cy="2" r="1" fill="currentColor" stroke="none"/>
+                    <circle cx="2" cy="12" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+                <svg class="absolute top-2 right-2 w-6 h-6 text-terras-accent1/60 transform rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path d="M2,12 Q2,2 12,2" stroke-width="1" stroke-linecap="round"/>
+                    <circle cx="12" cy="2" r="1" fill="currentColor" stroke="none"/>
+                    <circle cx="2" cy="12" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+                <svg class="absolute bottom-2 left-2 w-6 h-6 text-terras-accent1/60 transform -rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path d="M2,12 Q2,2 12,2" stroke-width="1" stroke-linecap="round"/>
+                    <circle cx="12" cy="2" r="1" fill="currentColor" stroke="none"/>
+                    <circle cx="2" cy="12" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+                <svg class="absolute bottom-2 right-2 w-6 h-6 text-terras-accent1/60 transform rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                    <path d="M2,12 Q2,2 12,2" stroke-width="1" stroke-linecap="round"/>
+                    <circle cx="12" cy="2" r="1" fill="currentColor" stroke="none"/>
+                    <circle cx="2" cy="12" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+
+                <div class="mb-12 relative z-10">
+                    <h3 class="font-maru text-lg border-b border-gray-100 pb-3 mb-6">
+                        <span>カット・カット付きのコース</span>
+                    </h3>
+                    <ul class="space-y-5">
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>ケアカット（はじめて〜3回目の方）</span>
+                            <span class="text-terras-cta font-medium">¥6,500</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>ケアカット（4回目以降の方）</span>
+                            <span class="text-terras-cta font-medium">¥6,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>中学生・高校生カット</span>
+                            <span class="text-terras-cta font-medium">¥3,500</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>キッズ・小学生カット</span>
+                            <span class="text-terras-cta font-medium">¥3,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>前髪カット ／ 眉カット</span>
+                            <span class="text-terras-cta font-medium">¥1,000 ／ ¥500</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>カット＋ケアカラー</span>
+                            <span class="text-terras-cta font-medium">¥12,000〜</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>カット＋セオリーRカラー（肩まで）</span>
+                            <span class="text-terras-cta font-medium">¥15,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>カット＋セオリーRパーマ</span>
+                            <span class="text-terras-cta font-medium">¥12,500</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>カット＋セオリーRデジタルパーマ</span>
+                            <span class="text-terras-cta font-medium">¥14,500</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>カット＋セオリーRストレート矯正</span>
+                            <span class="text-terras-cta font-medium">¥23,000〜</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="relative z-10">
+                    <h3 class="font-maru text-lg border-b border-gray-100 pb-3 mb-6">
+                        <span>ヘッドスパ・ケア・単品メニュー</span>
+                    </h3>
+                    <ul class="space-y-5">
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>ロングtimeスパ（頭皮・髪ケア30分）</span>
+                            <span class="text-terras-cta font-medium">¥9,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>ミドルtimeスパ（頭皮・髪ケア20分）</span>
+                            <span class="text-terras-cta font-medium">¥7,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>セオリーRケア（クレンジング＋保水＋シャンプー・ドライ）</span>
+                            <span class="text-terras-cta font-medium">¥10,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>セオリーRケアシャンプー・ドライ</span>
+                            <span class="text-terras-cta font-medium">¥4,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>ケアカラーのみ ／ 香草 ／ マニキュア</span>
+                            <span class="text-terras-cta font-medium">各 ¥9,000〜</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>セオリーRカラーのみ（ショート）</span>
+                            <span class="text-terras-cta font-medium">¥11,500</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>セオリーRストレートのみ</span>
+                            <span class="text-terras-cta font-medium">¥20,000〜</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>セオリーR特殊パーマのみ</span>
+                            <span class="text-terras-cta font-medium">¥12,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>ナチュラルセット ／ ヘアセット</span>
+                            <span class="text-terras-cta font-medium">¥3,000 ／ ¥5,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>キッズ袴 着付け</span>
+                            <span class="text-terras-cta font-medium">¥5,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>ロング料金（長さに応じて）</span>
+                            <span class="text-terras-cta font-medium">¥500〜2,000</span>
+                        </li>
+                        <li class="flex flex-wrap justify-between items-start gap-x-4 gap-y-1 font-sans text-sm md:text-base">
+                            <span>お直し・メニューのご相談</span>
+                            <span class="text-terras-cta font-medium">無料</span>
+                        </li>
+                        <li class="pt-2">
+                            <span class="text-terras-text/80 text-xs md:text-sm leading-loose block">※ 税込・税別の別はご案内元に明記がなかったため、このページでは表記していません（No Data）。ご予約時にお確かめください。<br>※ リタッチ（前回から3ヶ月以内）は割引になるメニューがあります。<br>※ 営業時間外の施術は別途 ¥500〜¥2,000 を申し受けます。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         7. ACCESS（店舗情報＋地図）／画像 0〜1点
+         地図は住所から https://maps.google.com/maps?q=<住所>&output=embed に差し替える
+         ============================================================ -->
+    <section id="access" class="py-24 md:py-32 bg-white border-t border-gray-50">
+        <div class="max-w-5xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row gap-12 lg:gap-20">
+            <div class="w-full lg:w-1/2">
+                <div class="inline-block mb-10">
+                    <h2 class="font-en-serif text-3xl md:text-4xl text-terras-text tracking-wider">Access</h2>
+                    <svg class="mt-3 w-32 h-4 text-terras-accent1/80" viewBox="0 0 100 15" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path d="M0,7 Q20,12 40,7 T80,7 T100,7" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+
+                <figure class="mb-10">
+                    <img src="images/access.jpg" alt="Capiz の入口とA型看板" class="w-full object-cover shadow-sm">
+                    <figcaption class="mt-3 text-xs text-terras-text/80 font-sans">看板は出していません。入口のA型黒板が目印です。</figcaption>
+                </figure>
+
+                <div class="space-y-6 font-sans text-sm md:text-base text-terras-text/80">
+                    <div class="flex gap-4 border-b border-gray-100 pb-4">
+                        <span class="w-20 font-maru font-medium text-terras-text shrink-0">Store</span>
+                        <span>spa&amp;hair Capiz（スパアンドヘアーカピス）</span>
+                    </div>
+                    <div class="flex gap-4 border-b border-gray-100 pb-4">
+                        <span class="w-20 font-maru font-medium text-terras-text shrink-0">Address</span>
+                        <span>〒177-0051<br>東京都練馬区関町北2-26-8 ビショー武蔵関A号室 1F</span>
+                    </div>
+                    <div class="flex gap-4 border-b border-gray-100 pb-4">
+                        <span class="w-20 font-maru font-medium text-terras-text shrink-0">Tel</span>
+                        <span><a href="tel:03-6312-2186" class="hover:text-terras-cta transition-colors">03-6312-2186</a><br><span class="text-xs">完全予約制です。当日のご予約も歓迎しています。</span></span>
+                    </div>
+                    <div class="flex gap-4 border-b border-gray-100 pb-4">
+                        <span class="w-20 font-maru font-medium text-terras-text shrink-0">Access</span>
+                        <span>西武新宿線「武蔵関駅」より徒歩3分<br><span class="text-xs">南口を出て、牛丼店の前の道を右へ。寿司店の目の前を左に入り、そのまま進んだ先の斜め向かいです。</span></span>
+                    </div>
+                    <div class="flex gap-4 border-b border-gray-100 pb-4">
+                        <span class="w-20 font-maru font-medium text-terras-text shrink-0">Open</span>
+                        <span>9:00 - 18:00（定休日：月曜日・ほか不定休）</span>
+                    </div>
+                    <div class="flex gap-4 border-b border-gray-100 pb-4">
+                        <span class="w-20 font-maru font-medium text-terras-text shrink-0">Payment</span>
+                        <span>各種クレジットカード・電子マネー・QR決済<br><span class="text-xs">Visa／Mastercard／JCB／American Express／Diners Club、交通系IC・楽天Edy・nanaco・iD・QUICPay、楽天ペイ・LINE Pay・au PAY。</span></span>
+                    </div>
+                    <div class="flex gap-4 border-b border-gray-100 pb-4">
+                        <span class="w-20 font-maru font-medium text-terras-text shrink-0">Kids</span>
+                        <span>お子さま連れでのご来店を歓迎しています</span>
+                    </div>
+                    <div class="flex gap-4 border-b border-gray-100 pb-4">
+                        <span class="w-20 font-maru font-medium text-terras-text shrink-0">Parking</span>
+                        <span>店舗専用の駐車場なし<br><span class="text-xs">近くにコインパーキングがあります。</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-1/2 h-80 lg:h-auto min-h-[20rem] bg-gray-50 shadow-inner relative">
+                <!-- ▼ 差し替え：q= に店舗の住所を入れる（APIキー不要の形式） -->
+                <iframe
+                    src="https://maps.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E7%B7%B4%E9%A6%AC%E5%8C%BA%E9%96%A2%E7%94%BA%E5%8C%972-26-8&output=embed"
+                    title="spa&amp;hair Capiz の地図"
+                    width="100%" height="100%" style="border:0; display:block;"
+                    allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         8. CTA（予約導線＋サンプル予約フォーム）／画像 0〜1点
+         ============================================================ -->
+    <section id="cta" class="py-24 md:py-32 bg-terras-bg-light relative overflow-hidden">
+        <div class="max-w-3xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="font-serif text-3xl md:text-4xl text-terras-text leading-relaxed mb-6">
+                    まずは、<br class="md:hidden">洗い方の話から。
+                </h2>
+                <p class="font-sans text-sm md:text-base text-terras-text/80 leading-loose">
+                    完全予約制です。ご予約・お問い合わせは、<br class="md:hidden">お電話または下記フォームより承っております。<br>
+                    当日のご予約も歓迎しています。お気軽にご連絡ください。
+                </p>
+            </div>
+
+            <div class="text-center mb-12">
+                <a href="tel:03-6312-2186" class="inline-flex items-center justify-center gap-3 bg-terras-cta text-white px-12 py-4 rounded-full text-base font-medium hover:bg-opacity-90 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                    お電話でご予約（03-6312-2186）
+                </a>
+            </div>
+
+            <!-- サンプル予約フォーム：送信処理は行わない -->
+            <div class="bg-white p-8 md:p-12 shadow-sm border border-terras-accent2/40">
+                <form id="booking-form" novalidate onsubmit="return handleBookingSubmit(event)">
+                    <div class="space-y-6">
+                        <div>
+                            <label for="bk-name" class="block font-maru text-sm text-terras-text mb-2">お名前</label>
+                            <input type="text" id="bk-name" name="name" autocomplete="name"
+                                   class="w-full border border-gray-200 rounded-md px-4 py-3 text-sm font-sans focus:outline-none focus:border-terras-cta transition-colors">
+                        </div>
+                        <div>
+                            <label for="bk-tel" class="block font-maru text-sm text-terras-text mb-2">お電話番号</label>
+                            <input type="tel" id="bk-tel" name="tel" autocomplete="tel"
+                                   class="w-full border border-gray-200 rounded-md px-4 py-3 text-sm font-sans focus:outline-none focus:border-terras-cta transition-colors">
+                        </div>
+                        <div>
+                            <label for="bk-date" class="block font-maru text-sm text-terras-text mb-2">ご希望日時</label>
+                            <input type="date" id="bk-date" name="date"
+                                   class="w-full border border-gray-200 rounded-md px-4 py-3 text-sm font-sans focus:outline-none focus:border-terras-cta transition-colors">
+                        </div>
+                        <div>
+                            <label for="bk-menu" class="block font-maru text-sm text-terras-text mb-2">ご希望メニュー</label>
+                            <select id="bk-menu" name="menu"
+                                    class="w-full border border-gray-200 rounded-md px-4 py-3 text-sm font-sans bg-white focus:outline-none focus:border-terras-cta transition-colors">
+                                <option value="">選択してください</option>
+                                <option value="cut">ケアカット</option>
+                                <option value="color">カット＋カラー</option>
+                                <option value="straight">セオリーRストレート矯正</option>
+                                <option value="perm">パーマ・デジタルパーマ</option>
+                                <option value="spa">ヘッドスパ（20分／30分）</option>
+                                <option value="care">セオリーRケア・ケアシャンプー</option>
+                                <option value="mens">メンズカット</option>
+                                <option value="kids">キッズ・学生カット</option>
+                                <option value="other">その他・ご相談</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="bk-note" class="block font-maru text-sm text-terras-text mb-2">ご要望（任意）</label>
+                            <textarea id="bk-note" name="note" rows="4"
+                                      class="w-full border border-gray-200 rounded-md px-4 py-3 text-sm font-sans focus:outline-none focus:border-terras-cta transition-colors"></textarea>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-terras-text/80 font-sans mt-6 mb-4">
+                        ※本サイトはサンプルのため送信されません。
+                    </p>
+
+                    <button type="submit"
+                            class="w-full bg-terras-cta text-white px-8 py-4 rounded-full text-base font-medium hover:bg-opacity-90 transition-all duration-300 shadow-md">
+                        予約を申し込む
+                    </button>
+                </form>
+
+                <!-- 送信後に表示される成功メッセージ -->
+                <div id="booking-success" class="hidden text-center py-8" role="status" aria-live="polite">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-14 h-14 mx-auto text-terras-cta mb-6" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="font-maru text-xl text-terras-text mb-4">送信されました（サンプル表示）</h3>
+                    <p class="font-sans text-sm text-terras-text/80 leading-loose mb-6">
+                        ※本サイトはサンプルのため送信されません。<br>
+                        実際のご予約はお電話にて承ります。
+                    </p>
+                    <button type="button" onclick="resetBookingForm()"
+                            class="font-maru text-sm text-terras-cta underline underline-offset-4 hover:opacity-80 transition-opacity">
+                        フォームに戻る
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         フッター
+         ============================================================ -->
+    <footer class="bg-white py-12 border-t border-gray-100 text-center">
+        <div class="max-w-7xl mx-auto px-6">
+            <a href="#" class="inline-block mb-4">
+                <span class="font-en-serif text-xl text-terras-text tracking-wider">Capiz</span>
+                <span class="block text-[10px] text-terras-accent1 font-maru tracking-widest mt-0.5">spa &amp; hair</span>
+            </a>
+            <p class="font-sans text-xs text-terras-text/80">
+                &copy; 2026 spa&amp;hair Capiz. All Rights Reserved.
+            </p>
+            <p class="font-sans text-[11px] text-terras-text/75 mt-3">
+                本サイトは提案用のサンプルです。掲載内容は実際のものと異なる場合があります。
+            </p>
+        </div>
+    </footer>
+<!-- ============ 制作クレジット帯（スズメデザイン） ============ -->
+<!-- 帯の地 #2E3336 ↔ 白フッター 12.78／小見出し 7.65／社名 12.78／
+     ボタン #FADF38 に濃色文字 9.54／ボタン地 ↔ 帯 9.54／ボタン地 ↔ サイト内CTA ΔE 67.6 -->
+<style>
+  .credit-band { background: #2E3336; border-top: 2px solid #B4521A; }
+  .credit-lead { color: #C4C9CB; }
+  .credit-name { color: #FFFFFF; }
+  aside .credit-btn { background: #FADF38; color: #2E3336; border: 1px solid #FADF38; }
+  aside .credit-btn:hover,
+  aside .credit-btn:focus-visible { background: #FBE55B; border-color: #FBE55B; color: #2E3336; }
+</style>
+<aside class="credit-band py-8">
+  <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
+    <p class="m-0">
+      <span class="credit-lead block font-sans text-xs tracking-wide">このサイトのデザインを制作しました</span>
+      <span class="credit-name block font-en-serif text-sm tracking-wide mt-1">サロン専門ホームページ制作　スズメデザイン</span>
+    </p>
+    <a href="https://suzumedesign.com/" target="_blank" rel="noopener noreferrer"
+       class="credit-btn inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-sans tracking-wide transition-all">
+      スズメデザインについて<span aria-hidden="true">&#8599;</span>
+    </a>
+  </div>
+</aside>
+
+
+    <script>
+        // モバイルメニューの開閉
+        function toggleMobileMenu(btn) {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            const trigger = btn || document.querySelector('[aria-controls="mobile-menu"]');
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', String(!menu.classList.contains('hidden')));
+            }
+        }
+
+        // サンプル予約フォーム：送信は行わず、成功表示に切り替えるだけ
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+            document.getElementById('booking-form').classList.add('hidden');
+            document.getElementById('booking-success').classList.remove('hidden');
+            document.getElementById('booking-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return false;
+        }
+
+        function resetBookingForm() {
+            const form = document.getElementById('booking-form');
+            form.reset();
+            form.classList.remove('hidden');
+            document.getElementById('booking-success').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
